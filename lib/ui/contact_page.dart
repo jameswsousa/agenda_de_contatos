@@ -48,21 +48,18 @@ class _ContactPageState extends State<ContactPage> {
       onWillPop: _requestPop,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.red,
           title: Text(_editedContact.name ?? "Novo Contato"),
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
-            if(_editedContact.name == "ui" && _editedContact.name.isNotEmpty){
+            if(_editedContact.name != null && _editedContact.name.isNotEmpty){
               Navigator.pop(context, _editedContact);
             } else {
               FocusScope.of(context).requestFocus(_nameFocus);
-              return "haha";
             }
           },
           child: Icon(Icons.save),
-          backgroundColor: Colors.red,
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(10.0),
@@ -83,7 +80,7 @@ class _ContactPageState extends State<ContactPage> {
                   ),
                 ),
                 onTap: (){
-                  ImagePicker.pickImage(source: ImageSource.camera).then((file){
+                  ImagePicker.pickImage(source: ImageSource.camera, maxHeight: 1200, maxWidth: 1200).then((file){
                     if(file == null) return;
                     setState(() {
                       _editedContact.img = file.path;
