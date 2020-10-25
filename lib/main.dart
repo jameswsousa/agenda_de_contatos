@@ -1,12 +1,14 @@
+import 'dart:ui';
+
 import 'package:agenda_contatos/ui/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(
-      primaryColor: Colors.teal,
-      accentColor: Colors.tealAccent
-    ),
+        
+        primarySwatch: Colors.teal,accentColor: Colors.tealAccent,
+        fontFamily: "Raleway"),
     home: HomePage(),
     debugShowCheckedModeBanner: false,
   ));

@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Contatos"),
+        title: Text("Contatos", style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         actions: <Widget>[
           PopupMenuButton<OrderOptions>(
@@ -64,48 +64,58 @@ class _HomePageState extends State<HomePage> {
 
   Widget _contactCard(BuildContext context, int index) {
     return GestureDetector(
-      child: Card(
-        color: Colors.teal[50],
-        child: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 80.0,
-                height: 80.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: contacts[index].img != null
-                          ? FileImage(File(contacts[index].img))
-                          : AssetImage("images/person.png"),
-                      fit: BoxFit.cover),
-                ),
+      child: Column(
+        children: <Widget>[
+          Card(
+            elevation: 0,
+            borderOnForeground: true,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.teal[700], width: 2),
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: contacts[index].img != null
+                              ? FileImage(File(contacts[index].img))
+                              : AssetImage("images/person.png"),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          contacts[index].name ?? "",
+                          style: TextStyle(
+                              fontSize: 22.0, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          contacts[index].email ?? "",
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        Text(
+                          contacts[index].phone ?? "",
+                          style: TextStyle(fontSize: 18.0),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      contacts[index].name ?? "",
-                      style: TextStyle(
-                          fontSize: 22.0, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      contacts[index].email ?? "",
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    Text(
-                      contacts[index].phone ?? "",
-                      style: TextStyle(fontSize: 18.0),
-                    )
-                  ],
-                ),
-              )
-            ],
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Divider(color: Colors.tealAccent[700],thickness: 2,height: 1,),
+          )
+        ],
       ),
       onTap: () {
         _showOptions(context, index);
@@ -128,12 +138,17 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: EdgeInsets.all(10.0),
                       child: FlatButton(
-                        child: Text(
-                          "Ligar",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 20.0,
-                          ),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.phone_forwarded, color: Colors.red,),SizedBox(width: 5,),
+                            Text(
+                              "Ligar",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                         onPressed: () {
                           launch("tel:${contacts[index].phone}");
@@ -144,12 +159,18 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: EdgeInsets.all(10.0),
                       child: FlatButton(
-                        child: Text(
-                          "Editar",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 20.0,
-                          ),
+                        child: Row( mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.edit, color: Colors.red,),
+                            SizedBox(width: 5,),
+                            Text(
+                              "Editar",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                         onPressed: () {
                           Navigator.pop(context);
@@ -160,9 +181,18 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: EdgeInsets.all(10.0),
                       child: FlatButton(
-                        child: Text(
-                          "Excluir",
-                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.delete, color: Colors.red,),
+                            SizedBox(width: 5,),
+                            Text(
+                              "Excluir",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                         onPressed: () {
                           helper.deleteContact(contacts[index].id);
